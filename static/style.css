@@ -1,0 +1,30 @@
+body {
+	background: gray;
+	background-image:url("background.jpg");
+	background-repeat:no-repeat;
+	background-size: 100% 100vh;
+	color: black;
+}
+h1{
+	text-align: center;
+	margin-top: 50px;
+	text-transform: uppercase;
+	color: white;
+}
+form{
+	text-align: center;
+	margin-top: 240px;
+}
+
+
+
+h2{
+	text-align: center;
+    margin-top: 250px;
+}
+
+p{
+	text-align: center;
+    margin-top: 200px;
+}
+
