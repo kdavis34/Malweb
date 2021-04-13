@@ -25,6 +25,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB #Using this one
 from sklearn.svm import SVC
+from FormatURLs import format_url
+from FeatureExtractor import extract_features
 
 app = Flask(__name__)
 
@@ -39,22 +41,22 @@ def search():
 		
 		#This dummy format function should be format function (slightly modified though to return a URL) from the format Python script
 		#The format script can probably be added to the directory and then the function could be imported
-		url = dummy_format_func(url_raw)
+		url = format_url(url_raw)
 
 		#This dummy extraction function should be the extraction function that returns a list of the data instance's values
 		#The extraction script can probably be added to the directory and then the function could be imported
-		XnewRaw = dummy_extract_func(url) 
+		XnewRaw = extract_features(url) 
 		
 		#Then, preprocess XnewRaw so that it matches the coding in the data set.
 		#Should probably do this within this Python file
 		Xnew = preprocess_instance(XnewRaw)
 
 		#run_models should return a list of classification results
-		class_results = run_models(Xnew)
+		#class_results = run_models(Xnew)
 
 		#This final classification should be a 0 or 1 and determines if the website is malicious or not
 		#This value and other values (like the list of classification results) should be fed to the results page
-		final_classification = weight_results(class_results)
+		#final_classification = weight_results(class_results)
 		
 		return render_template('results.html')
 
@@ -62,17 +64,8 @@ def search():
 #def page2():
 #	return render_template('page2.html')
 
-def dummy_format_func(raw_url):
-	print("placeholder function")
-	return True
-
-def dummy_extract_func(formatted_url):
-	print("placeholder function")
-	return True
-
 def preprocess_instance(data_instance):
-	print("preprocessing")
-	preprocessed_instance = 0
+	preprocessed_instance = ['0' if v is None else '1' for v in data_instance]
 	return preprocessed_instance #The new preprocessed list should be returned
 
 def weight_results(results):
