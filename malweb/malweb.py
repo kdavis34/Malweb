@@ -25,7 +25,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB #Using this one
 from sklearn.svm import SVC
-from FormatURLs import format_url
+from FormatURLs import format_url, convert_extracted_features
 from FeatureExtractor import extract_features
 from machinelearning import run_models
 
@@ -37,34 +37,47 @@ def main():
 @app.route('/results', methods=['GET','POST'])
 def search():
 	if request.method =='POST':
-		
+		global url_raw
 		url_raw = request.form['webURL']
 		
 		#The format_url is imported from the FormatURLs script
 		url = format_url(url_raw)
-
+		print(url)
 		#The extract_features function is imported from the FeatureExtractor script
 		XnewRaw = extract_features(url) 
-		
+		print(XnewRaw)
 		#This preprocessing function formats the new data instance so that it correctly matches the data items in the data set
 		Xnew = preprocess_instance(XnewRaw)
-
+		print(Xnew)
+		#This function encodes the features of the url to integers to be used by the models
+		XnewProcessed = convert_extracted_features(Xnew)
+		print(XnewProcessed)
 		#run_models should return a list of classification results (Ordered LR, Bayes, Tree)
-		class_results = run_models(Xnew)
-
+		try:
+			class_results = run_models(XnewProcessed)
+			print(class_results)
+		except:
+			return Error()
 		#This value and other values (like the list of classification results) should be fed to the results page
-		final_classification = weight_results(class_results)
-		
-		return render_template('results.html')
+		try:
+			final_classification = weight_results(class_results)
+			print(final_classification)
+			return render_template('results.html', url=url_raw, classification=final_classification)
+		except:
+			return Error()
 
-#@app.route("/page2")
-#def page2():
-#	return render_template('page2.html')
+@app.route("/error")
+def Error():
+	return render_template('error.html')
 
 #Preprocesses the data so that the new data instances match the data instances within the data set
 def preprocess_instance(data_instance):
-	preprocessed_instance = ['0' if v is None else '1' for v in data_instance]
-	return preprocessed_instance #The new preprocessed list should be returned
+    for index, item in enumerate(data_instance):
+        if item == None and index > 4 and index < 9:
+            data_instance[index] = '0'
+        if item != None and index > 4 and index < 9:
+            data_instance[index] = '1'
+    return data_instance
 
 #Weights the classification results of the 3 ML algorithms used
 def weight_results(class_results):
@@ -73,16 +86,16 @@ def weight_results(class_results):
 	#Tree - .948 = 36.2%
 	#Total = 2.619   
 
-	weighted_results = 0
+	weighted_class = ""
 
 	summation = (.318*class_results[0]) + (.32*class_results[1]) + (.362*class_results[2])
 	
 	if summation > .5:
-		weighted_results = 1
+		weighted_class = "Malicious"
 	else:
-		weighted_results = 0
+		weighted_class = "Benign"
 
-	return weighted_results
+	return weighted_class
 
 
 if __name__ == "__main__":

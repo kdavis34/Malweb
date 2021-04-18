@@ -191,17 +191,17 @@ def extract_features(url_input):
 	urlfeatures.append(url_input)
 	urlfeatures.append(str(len(url_input)))
 	urlfeatures.append(Get_TLD(url_input))
-#   urlfeatures.append(r.encoding)
-#   urlfeatures.append(Get_Server(url_input, r))
-#   urlfeatures.append(Get_Content_Length(url_input, r)) #Length of HTML
-#   urlfeatures.append(Get_Country(host))
+	#   urlfeatures.append(r.encoding)
+	urlfeatures.append(Get_Server(url_input, r))
+	#   urlfeatures.append(Get_Content_Length(url_input, r)) #Length of HTML
+	#   urlfeatures.append(Get_Country(host))
 	urlfeatures.append(Get_State(host, r))
 	urlfeatures.append(Get_Date_Created(url_input))
-#   urlfeatures.append(Get_Last_Mod_Date(url_input, r))
+	#   urlfeatures.append(Get_Last_Mod_Date(url_input, r))
 	urlfeatures.append(Get_Zip_Code(host))
 	urlfeatures.append(Get_City(host))
-#   urlfeatures.append(Get_Content_Encoding(url_input, r))
-	urlfeatures.append(Get_HSTS(url_input, r))
+	urlfeatures.append(Get_Content_Encoding(url_input, r))
+	#	urlfeatures.append(Get_HSTS(url_input, r))
 	urlfeatures.append(Get_Content_Type(url_input,r))
 	
 	return urlfeatures

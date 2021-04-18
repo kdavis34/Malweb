@@ -12,6 +12,7 @@ import sklearn
 from pandas import read_csv
 from pandas.plotting import scatter_matrix
 from matplotlib import pyplot
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import StratifiedKFold
@@ -26,16 +27,17 @@ from sklearn.naive_bayes import GaussianNB #Using this one
 from sklearn.svm import SVC
 
 def run_models(Xnew):
-
+    le = preprocessing.LabelEncoder()
     url = "https://raw.githubusercontent.com/kdavis34/Malweb/dataset/AlteredB2Dataset.csv"
     names = ['url', 'url_length', 'tld', 'server', 'state', 'reg_date', 'zipcode', 'city', 'content_encoding', 'content_type', 'class']
-    dataset = read_csv(url, names=names)
+    dataset = pandas.read_csv(url)
+    processed_dataset = dataset.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
 
-    array = dataset.values
+    array = processed_dataset.values
     X = array[:, 0:10] #This is all of the features of the data set
     y = array[:,10] #This is the type classification (1 (malicious) or 0 (good))
 
-    modelLR = LogisticRegression()
+    modelLR = LogisticRegression(max_iter=2500)
     modelLR.fit(X, y) #Supplying the model with data and its target
 
     modelBayes = GaussianNB()
@@ -44,12 +46,12 @@ def run_models(Xnew):
     modelTree = DecisionTreeClassifier()
     modelTree.fit(X, y) #Supplying the model with data and its target
 
+
     yNewLR = modelLR.predict(Xnew)
     yNewBayes = modelBayes.predict(Xnew)
     yNewTree = modelTree.predict(Xnew)
 
     class_results = [yNewLR[0], yNewBayes[0], yNewTree[0]] #1 = malicious, 0 = not malicious
-
     return class_results
 
 #Now all that's necessary is to get the new data instance from the user submitted URL, call the predict function and return the value

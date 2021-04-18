@@ -19,12 +19,14 @@ form{
 
 
 h2{
-	text-align: center;
-    margin-top: 250px;
-}
-
-p{
+	color: #FF0000;
 	text-align: center;
     margin-top: 200px;
+}
+
+
+h3{
+	text-align: center;
+	margin-top: 250px;
 }
 

@@ -1,3 +1,7 @@
+import pandas
+import numpy
+from sklearn import preprocessing
+
 # Formats a list of urls given in a txt file by concatenating "http://" to the beginning and stripping the new line character
 def format_txt_urls():
 	reading_file = open("websites.txt", "r")
@@ -15,6 +19,18 @@ def format_txt_urls():
 
 # Formats the url given as input by concatenating "http://" to the beginning if not already present and returns the formatted string
 def format_url(raw_url):
-	if ((raw_url.startswith('http://',0) == False) or (raw_url.startswith('https://',0) == False)):
+	url = ''
+	if ((raw_url.startswith('http://',0) == False) and (raw_url.startswith('https://',0) == False)):
 		url = 'http://' + raw_url
+	elif ((raw_url.startswith('http://',0) == True) or (raw_url.startswith('https://',0) == True)):
+		url = raw_url
+	# ***Place exception handling***
 	return url
+		
+
+def convert_extracted_features(Xnew):
+	le = preprocessing.LabelEncoder()
+	XnewProcessed = pandas.DataFrame(Xnew)
+	XnewProcessed = XnewProcessed.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
+	XnewProcessed =XnewProcessed.T
+	return (XnewProcessed)
