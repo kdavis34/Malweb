@@ -128,7 +128,6 @@ mpmath==1.1.0
 msgpack==1.0.0
 multidict==5.1.0
 multipledispatch==0.6.0
-navigator-updater==0.2.1
 nbconvert
 nbformat==5.0.7
 networkx
