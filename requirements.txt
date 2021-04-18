@@ -79,7 +79,7 @@ future==0.18.2
 geographiclib==1.50
 geoip2==4.1.0
 geopy==2.1.0
-gevent @ file:///opt/concourse/worker/volumes/live/78aec834-bbf0-47a7-799f-96dd2cf589ab/volume/gevent_1593009579767/work
+gevent
 glob2==0.7
 global-land-mask==1.0.0
 gmpy2==2.0.8
