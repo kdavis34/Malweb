@@ -24,7 +24,7 @@ def format_url(raw_url):
 		url = 'http://' + raw_url
 	elif ((raw_url.startswith('http://',0) == True) or (raw_url.startswith('https://',0) == True)):
 		url = raw_url
-	# ***Place exception handling***
+
 	return url
 		
 

@@ -46,13 +46,22 @@ def run_models(Xnew):
     modelTree = DecisionTreeClassifier()
     modelTree.fit(X, y) #Supplying the model with data and its target
 
+    lrF1Score = modelLR.score(X, y)
+    lrF1Score = round(lrF1Score, 2)
+    print(lrF1Score)
+    nbF1Score = modelBayes.score(X, y)
+    nbF1Score = round(nbF1Score, 2)
+    print(nbF1Score)
+    dtF1Score = modelTree.score(X, y)
+    dtF1Score = round(dtF1Score, 2)
+    print(dtF1Score)
 
     yNewLR = modelLR.predict(Xnew)
     yNewBayes = modelBayes.predict(Xnew)
     yNewTree = modelTree.predict(Xnew)
 
     class_results = [yNewLR[0], yNewBayes[0], yNewTree[0]] #1 = malicious, 0 = not malicious
-    return class_results
+    return class_results, lrF1Score, nbF1Score, dtF1Score
 
 #Now all that's necessary is to get the new data instance from the user submitted URL, call the predict function and return the value
 #I know that everything is just in a Python file for right now, but all of this stuff should be able to be moved to a function, which could be called when the user presses "submit" on the website
