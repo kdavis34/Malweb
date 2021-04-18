@@ -54,7 +54,7 @@ def search():
 		print(XnewProcessed)
 		#run_models should return a list of classification results (Ordered LR, Bayes, Tree)
 		try:
-			class_results, lrF1Score, nbF1Score, dtF1Score = run_models(XnewProcessed)
+			class_results, lrClassification, nbClassification, dtClassification = run_models(XnewProcessed)
 			print(class_results)
 		except:
 			return Error()
@@ -62,7 +62,8 @@ def search():
 		try:
 			final_classification = weight_results(class_results)
 			print(final_classification)
-			return render_template('results.html', url=url_raw, classification=final_classification, lr_f1_score=lrF1Score, nb_f1_score=nbF1Score, dt_f1_score=dtF1Score)
+			return render_template('results.html', url=url_raw, classification=final_classification,
+				lrClass=lrClassification, nbClass=nbClassification, dtClass=dtClassification)
 		except:
 			return Error()
 
