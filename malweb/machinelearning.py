@@ -31,14 +31,14 @@ def run_models(Xnew):
     nbClassification = ''
     dtClassification = ''
     le = preprocessing.LabelEncoder()
-    url = "https://raw.githubusercontent.com/kdavis34/Malweb/dataset/AlteredB2Dataset.csv"
+    url = "https://raw.githubusercontent.com/kdavis34/Malweb/dataset/B2DatasetCodedv3.csv"
     names = ['url', 'url_length', 'tld', 'server', 'state', 'reg_date', 'zipcode', 'city', 'content_encoding', 'content_type', 'class']
     dataset = pandas.read_csv(url)
-    processed_dataset = dataset.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
+    #processed_dataset = dataset.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
 
-    array = processed_dataset.values
-    X = array[:, 0:10] #This is all of the features of the data set
-    y = array[:,10] #This is the type classification (1 (malicious) or 0 (good))
+    array = dataset.values
+    X = array[:, 0:8] #This is all of the features of the data set
+    y = array[:,8] #This is the type classification (1 (malicious) or 0 (good))
 
     modelLR = LogisticRegression(max_iter=2500)
     modelLR.fit(X, y) #Supplying the model with data and its target

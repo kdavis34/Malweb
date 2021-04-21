@@ -78,6 +78,8 @@ def Get_Zip_Code(host):
 	try:
 		ip = Get_IP_Address(host)
 		zipcode = getting_ip(ip)['zip_code']
+		if (zipcode == ''):
+			zipcode = None
 		return zipcode
 	except:
 		return None
@@ -86,6 +88,8 @@ def Get_City(host):
 	try:
 		ip = Get_IP_Address(host)
 		city = getting_ip(ip)['city']
+		if (city == ''):
+			city = None
 		return city
 	except:
 		return None
@@ -138,6 +142,8 @@ def Get_Last_Mod_Date(url_input, r):
 def Get_Date_Created(url_input):
 	try:
 		date = find_date(url_input)
+		if (date == ''):
+			date = None
 		return date
 	except:
 		return None
@@ -188,11 +194,11 @@ def extract_features(url_input):
 	except:          
 		return urlfeatures
 		
-	urlfeatures.append(url_input)
-	urlfeatures.append(str(len(url_input)))
+	#urlfeatures.append(url_input)
+	urlfeatures.append(int(len(url_input)))
 	urlfeatures.append(Get_TLD(url_input))
 	#   urlfeatures.append(r.encoding)
-	urlfeatures.append(Get_Server(url_input, r))
+	#urlfeatures.append(Get_Server(url_input, r))
 	#   urlfeatures.append(Get_Content_Length(url_input, r)) #Length of HTML
 	#   urlfeatures.append(Get_Country(host))
 	urlfeatures.append(Get_State(host, r))
