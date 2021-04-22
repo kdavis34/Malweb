@@ -55,7 +55,20 @@ def run_models(Xnew):
 
     class_results = [yNewLR[0], yNewBayes[0], yNewTree[0]] #1 = malicious, 0 = not malicious
 
-    return class_results
+    if (yNewLR[0] == 1):
+        lrClassification = 'Malicious'
+    else:
+        lrClassification = 'Benign'
+    if (yNewBayes[0] == 1):
+        nbClassification = 'Malicious'
+    else:
+        nbClassification = 'Benign'
+    if (yNewTree[0] == 1):
+        dtClassification = 'Malicious'
+    else:
+        dtClassification = 'Benign'
+
+    return class_results, lrClassification, nbClassification, dtClassification
 
 #Now all that's necessary is to get the new data instance from the user submitted URL, call the predict function and return the value
 #I know that everything is just in a Python file for right now, but all of this stuff should be able to be moved to a function, which could be called when the user presses "submit" on the website

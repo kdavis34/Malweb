@@ -54,7 +54,7 @@ def search():
 		print(XnewProcessed)
 		#run_models should return a list of classification results (Ordered LR, Bayes, Tree)
 		try:
-			class_results = run_models(XnewProcessed)
+			class_results, lrClassification, nbClassification, dtClassification = run_models(XnewProcessed)
 			print(class_results)
 		except:
 			return Error()
@@ -62,7 +62,8 @@ def search():
 		try:
 			final_classification = weight_results(class_results)
 			print(final_classification)
-			return render_template('results.html', url=url_raw, classification=final_classification)
+			return render_template('results.html', url=url_raw, classification=final_classification,
+				lrClass=lrClassification, nbClass=nbClassification, dtClass=dtClassification)
 		except:
 			return Error()
 
@@ -118,7 +119,7 @@ def weight_results(class_results):
 
 	weighted_class = ""
 
-	summation = (.318*class_results[0]) + (.32*class_results[1]) + (.362*class_results[2])
+	summation = (.318*class_results[0]) + (.362*class_results[1]) + (.32*class_results[2])
 	
 	if summation > .5:
 		weighted_class = "Malicious"
