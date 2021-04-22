@@ -31,6 +31,6 @@ def format_url(raw_url):
 def convert_extracted_features(Xnew):
 	le = preprocessing.LabelEncoder()
 	XnewProcessed = pandas.DataFrame(Xnew)
-	XnewProcessed = XnewProcessed.apply(lambda col: le.fit_transform(col.astype(int)), axis=0, result_type='expand')
+	XnewProcessed = XnewProcessed.apply(lambda col: le.fit_transform(col.astype(str)), axis=0, result_type='expand')
 	XnewProcessed =XnewProcessed.T
 	return (XnewProcessed)

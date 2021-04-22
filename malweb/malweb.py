@@ -73,40 +73,25 @@ def Error():
 
 #Preprocesses the data so that the new data instances match the data instances within the data set
 def preprocess_instance(data_instance):
-	for index, item in enumerate(data_instance):
-		if item == None and index > 2 and index < 7:
-		   data_instance[index] = 0
-		if item != None and index > 2 and index < 7:
-		   data_instance[index] = 1
+	if (data_instance[3] == None):
+		data_instance[3] = '0'
+	else:
+		data_instance[3] = '1'
 
-		if data_instance[1] == 'com':
-			data_instance[1] = 1
-		elif data_instance[1] == 'org':
-			data_instance[1] = 2
-		elif data_instance[1] == 'net':
-			data_instance[1] = 3
-		else:
-			data_instance[1] = 4
+	if (data_instance[4] == None):
+		data_instance[4] = '0'
+	else:
+		data_instance[4] = '1'
 
-		if data_instance[2] == 'Maryland' or 'Kansas' or 'Oregon' or 'Arizona' or 'California' or 'Virginia' or 'Illinois' or 'Nevada' or 'Texas' or 'Florida' or 'Wisconsin' or 'Michigan' or 'Colorado' or 'Ohio' or 'Missouri' or 'Pennyslvania' or 'Utah' or 'New Mexico' or 'Delaware':
-			data_instance[2] = 1
-		else:
-			data_instance[2] = 1
+	if (data_instance[5] == None):
+		data_instance[5] = '0'
+	else:
+		data_instance[5] = '1'
 
-		if data_instance[7] == 'text/html; charset=utf-8' or 'text/html; charset=UTF-8' or 'text/html;charset=utf-8' or 'text/html;charset=UTF-8':
-			data_instance[7] = 1
-		elif data_instance[7] == 'text/html':
-			data_instance[7] = 2
-		elif data_instance[7] == 'text/html; charset=iso-8859-1' or 'text/html; charset=ISO-8859-1' or 'text/html;charset=iso-8859-1' or 'text/html;charset=ISO-8859-1':
-			data_instance[7] = 3
-		elif data_instance[7] == 'text/html; charset=us-ascii' or 'text/html;charset=us-ascii':
-			data_instance[7] == 4
-		elif data_instance[7] == 'text/plain;charset=utf-8' or 'text/plain; charset=utf-8':
-			data_instance[7] = 5
-		elif data_instance[7] == "application/ctect stream, text/html":
-			data_instance[7] = 6
-		else:
-			data_instance[7] = 7
+	if (data_instance[6] == None):
+		data_instance[6] = '0'
+	else:
+		data_instance[6] = '1'
 
 	return data_instance
 
@@ -119,7 +104,7 @@ def weight_results(class_results):
 
 	weighted_class = ""
 
-	summation = (.318*class_results[0]) + (.362*class_results[1]) + (.32*class_results[2])
+	summation = (.318*class_results[0]) + (.32*class_results[1]) + (1*class_results[2])
 	
 	if summation > .5:
 		weighted_class = "Malicious"
